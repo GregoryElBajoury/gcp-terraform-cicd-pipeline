@@ -7,7 +7,7 @@ terraform {
 }
 
 provider "google" {
-  project = "ton-id-projet" # Remplace par ton ID réel
+  project = "mon-projet-devops-485603" # Remplace par ton ID réel
   region  = "us-central1"
 }
 
