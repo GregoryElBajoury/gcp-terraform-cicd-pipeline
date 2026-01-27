@@ -6,6 +6,10 @@ name: "Terraform PRO Pipeline"
 on:
   push:
     branches: [ "master" ]
+    paths-ignore:
+      - '**.md'
+      - 'LICENSE'
+      - '.gitignore'
   workflow_dispatch:
 
 jobs:
