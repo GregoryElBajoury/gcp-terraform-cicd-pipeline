@@ -1,25 +1,41 @@
 terraform {
   required_providers {
-    docker = {
-      source  = "kreuzwerker/docker"
-      version = "~> 3.0.1"
+    google = {
+      source  = "hashicorp/google"
+      version = "~> 4.0"
     }
   }
 }
 
-provider "docker" {}
-
-resource "docker_image" "nginx" {
-  name         = "nginx:latest"
-  keep_locally = false
+provider "google" {
+  credentials = file("gcp-key.json")
+  project     = "TON_PROJECT_ID_ICI" # À remplacer par l'ID de ton projet GCP
+  region      = "us-central1"
+  zone        = "us-central1-a"
 }
 
-resource "docker_container" "nginx" {
-  image = docker_image.nginx.image_id
-  name  = "mon-serveur-cicd"
-  ports {
-    internal = 80
-    external = 8000
+resource "google_compute_instance" "vm_gratuite" {
+  name         = "instance-docker-gratuite"
+  machine_type = "e2-micro" # Inclus dans le Free Tier
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-11"
+    }
   }
-#}
-#Test CI
+
+  network_interface {
+    network = "default"
+    access_config {
+      # Donne une IP publique
+    }
+  }
+
+  # Script pour installer Docker automatiquement au démarrage
+  metadata_startup_script = <<-EOT
+    sudo apt-get update
+    sudo apt-get install -y docker.io
+    sudo systemctl start docker
+    sudo systemctl enable docker
+  EOT
+}
