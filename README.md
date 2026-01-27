@@ -1,3 +1,7 @@
+![Terraform](https://img.shields.io/badge/terraform-%235835CC.svg?style=for-the-badge&logo=terraform&logoColor=white)
+![GCP](https://img.shields.io/badge/GoogleCloud-%234285F4.svg?style=for-the-badge&logo=google-cloud&logoColor=white)
+![GitHub Actions](https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white)
+
 # 🚀 Projet CI/CD Terraform & Google Cloud
 
 Ce projet implémente une infrastructure automatisée et sécurisée sur Google Cloud Platform (GCP) en utilisant **Terraform** pour l'Infrastructure as Code (IaC) et **GitHub Actions** pour le déploiement continu.
