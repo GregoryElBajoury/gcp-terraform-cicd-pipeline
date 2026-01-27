@@ -12,7 +12,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # ÉTAPE CLÉ : Authentification officielle
       - id: 'auth'
         uses: 'google-github-actions/auth@v2'
         with:
@@ -24,10 +23,18 @@ jobs:
         run: |
           terraform init
           terraform plan -out=tfplan
+
+      # Sauvegarde le plan pour le job suivant
+      - name: Upload Plan
+        uses: actions/upload-artifact@v4
+        with:
+          name: tfplan
+          path: tfplan
           
   terraform-apply:
     name: "2. Déploiement (Apply)"
     needs: terraform-plan
+    # Ne se lance que si tu cliques manuellement sur "Run workflow"
     if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
@@ -39,8 +46,15 @@ jobs:
           credentials_json: '${{ secrets.GCP_SA_KEY }}'
 
       - uses: hashicorp/setup-terraform@v3
+
+      # Récupère le plan généré au job précédent
+      - name: Download Plan
+        uses: actions/download-artifact@v4
+        with:
+          name: tfplan
       
       - name: Init & Apply
         run: |
           terraform init
-          terraform apply -auto-approve
+          # On applique spécifiquement le fichier de plan reçu
+          terraform apply -auto-approve tfplan
