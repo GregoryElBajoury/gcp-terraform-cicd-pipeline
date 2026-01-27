@@ -72,5 +72,7 @@ Une fois le déploiement terminé, l'application est accessible via l'IP publiqu
 - Mise en pause : Le compte de service peut être désactivé dans la console GCP pour neutraliser les accès sans supprimer la configuration.
 
 
+Gregory EL BAJOURY
+
 
 
