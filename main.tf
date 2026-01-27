@@ -8,8 +8,7 @@ terraform {
 }
 
 provider "google" {
-  credentials = file("gcp-key.json")
-  project     = "TON_PROJECT_ID_ICI" # À remplacer par l'ID de ton projet GCP
+  project     = "mon-projet-devops-485603" # À remplacer par l'ID de ton projet GCP
   region      = "us-central1"
   zone        = "us-central1-a"
 }
