@@ -27,6 +27,11 @@ Le déploiement suit un cycle de sécurité rigoureux :
 1.  **Phase d'Inspection (Plan)** : À chaque `git push`, Terraform calcule les changements nécessaires et génère un fichier `tfplan`.
 2.  **Phase de Déploiement (Apply)** : Le déploiement réel ne se déclenche que par une **action manuelle** sur GitHub, après vérification du plan.
 
+Le pipeline est optimisé pour la sécurité et le coût :
+* **Déclenchement** : Uniquement sur la branche `master`.
+* **Filtres** : Ignore les changements de documentation (`paths-ignore: '**.md'`).
+* **Sécurité (Manual Gate)** : Le job `terraform apply` nécessite une validation manuelle.
+* **Artefacts** : Le fichier `tfplan` est sauvegardé entre les jobs pour garantir que ce qui est inspecté est exactement ce qui est déployé.
 ---
 
 ## 📖 Guide de démarrage
