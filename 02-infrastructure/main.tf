@@ -55,6 +55,15 @@ resource "google_compute_instance" "vm_gratuite" {
     }
   }
 
+# --- AJOUT DU BLOC RÉSEAU OBLIGATOIRE ---
+  network_interface {
+    network = "default"
+    access_config {
+      # Nécessaire pour obtenir une IP publique
+    }
+  }
+
+
   # ========================================================================
   # SCRIPT DE POST-INSTALLATION (BOOTSTRAP)
   # Installation de Docker et déploiement du conteneur applicatif
