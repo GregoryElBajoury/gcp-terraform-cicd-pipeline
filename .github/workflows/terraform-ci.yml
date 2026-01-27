@@ -1,4 +1,4 @@
-name: "Terraform CI"
+name: "Terraform GCP CI"
 
 on:
   push:
@@ -8,8 +8,12 @@ on:
 
 jobs:
   terraform-check:
-    name: "Check & Validate"
+    name: "Check, Validate & Plan"
     runs-on: ubuntu-latest
+    
+    # On définit la clé Google au niveau du Job pour qu'elle soit disponible partout
+    env:
+      GOOGLE_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
 
     steps:
       - name: Checkout Code
@@ -22,7 +26,12 @@ jobs:
         run: terraform init
 
       - name: Terraform Format
+        # Cette étape échouera si tu n'as pas fait 'terraform fmt' localement
         run: terraform fmt -check
 
       - name: Terraform Validate
         run: terraform validate
+
+      - name: Terraform Plan
+        # Le Plan permet de voir ce que GCP va créer sans rien payer pour l'instant
+        run: terraform plan
