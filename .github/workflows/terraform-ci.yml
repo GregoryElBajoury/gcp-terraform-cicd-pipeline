@@ -1,3 +1,6 @@
+# ==========================================================================
+# PIPELINE CI/CD TERRAFORM PRO (Version Multi-Dossiers)
+# ==========================================================================
 name: "Terraform PRO Pipeline"
 
 on:
@@ -9,52 +12,67 @@ jobs:
   terraform-plan:
     name: "1. Inspection (Plan)"
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+    # Cette option force toutes les commandes 'run' à s'exécuter dans ce dossier
+    defaults:
+      run:
+        working-directory: ./02-infrastructure 
 
-      - id: 'auth'
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Google Cloud Auth
+        id: 'auth'
         uses: 'google-github-actions/auth@v2'
         with:
           credentials_json: '${{ secrets.GCP_SA_KEY }}'
 
-      - uses: hashicorp/setup-terraform@v3
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
       
-      - name: Init & Plan
+      - name: Terraform Init & Plan
         run: |
           terraform init
           terraform plan -out=tfplan
 
-      # Sauvegarde le plan pour le job suivant
-      - name: Upload Plan
+      - name: Archive Terraform Plan
         uses: actions/upload-artifact@v4
         with:
           name: tfplan
-          path: tfplan
+          # On précise le chemin relatif au working-directory
+          path: 02-infrastructure/tfplan
+          retention-days: 1
           
   terraform-apply:
     name: "2. Déploiement (Apply)"
     needs: terraform-plan
-    # Ne se lance que si tu cliques manuellement sur "Run workflow"
     if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+    defaults:
+      run:
+        working-directory: ./02-infrastructure
 
-      - id: 'auth'
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Google Cloud Auth
+        id: 'auth'
         uses: 'google-github-actions/auth@v2'
         with:
           credentials_json: '${{ secrets.GCP_SA_KEY }}'
 
-      - uses: hashicorp/setup-terraform@v3
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
 
-      # Récupère le plan généré au job précédent
-      - name: Download Plan
+      - name: Download Terraform Plan
         uses: actions/download-artifact@v4
         with:
           name: tfplan
+          # On télécharge l'artefact directement dans le dossier de travail
+          path: 02-infrastructure
       
-      - name: Init & Apply
+      - name: Terraform Init & Apply
         run: |
           terraform init
-          # On applique spécifiquement le fichier de plan reçu
           terraform apply -auto-approve tfplan

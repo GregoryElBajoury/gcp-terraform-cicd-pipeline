@@ -1,5 +1,34 @@
+# ==========================================
+# TERRAFORM : Fichiers locaux et temporaires
+# ==========================================
+# Répertoires de plugins (très lourds)
 .terraform/
+
+# Fichiers d'état locaux (Contiennent des secrets en clair !)
 *.tfstate
 *.tfstate.backup
+*.tfstate.lock.info
+
+# Verrouillage des dépendances (Sauf si tu souhaites figer les versions)
 .terraform.lock.hcl
-gcp-key.json
+
+# Plan de sortie (Peut contenir des données sensibles)
+tfplan
+
+# ==========================================
+# SECRETS ET CONFIGURATION SENSIBLE
+# ==========================================
+# Clés de comptes de service GCP
+*.json
+
+# Variables d'environnement locales
+*.tfvars
+*.tfvars.json
+
+# ==========================================
+# SYSTÈME ET ÉDITEUR
+# ==========================================
+.DS_Store
+.vscode/
+.idea/
+*.log
