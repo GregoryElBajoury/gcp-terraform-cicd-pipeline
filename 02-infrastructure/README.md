@@ -1,4 +1,4 @@
-# 🏗️ Couche Infrastructure - Application & Compute
+#  Couche Infrastructure - Application & Compute
 
 Ce dossier contient la définition technique des ressources applicatives déployées sur Google Cloud Platform.
 
