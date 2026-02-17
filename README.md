@@ -2,22 +2,22 @@
 ![GCP](https://img.shields.io/badge/GoogleCloud-%234285F4.svg?style=for-the-badge&logo=google-cloud&logoColor=white)
 ![GitHub Actions](https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white)
 
-# 🚀 Projet CI/CD Terraform & Google Cloud
+#  Projet CI/CD Terraform & Google Cloud
 
 Ce projet implémente une infrastructure automatisée et sécurisée sur Google Cloud Platform (GCP) en utilisant **Terraform** pour l'Infrastructure as Code (IaC) et **GitHub Actions** pour le déploiement continu.
 
-## 🏗️ Architecture du Projet
+##  Architecture du Projet
 
 Le projet adopte une approche modulaire en deux étapes pour garantir la persistence et la sécurité des données d'infrastructure.
 
-### 📂 Structure des fichiers
+###  Structure des fichiers
 * **`01-bootstrap/`** : Initialisation du stockage distant (Bucket GCS) pour l'état Terraform.
 * **`02-infrastructure/`** : Définition des ressources Cloud (VM Compute Engine, Firewall, Docker).
 * **`.github/workflows/`** : Pipeline d'automatisation CI/CD avec validation par artefact.
 
 ---
 
-## 🛠️ Stack Technique
+## Stack Technique
 * **Cloud** : Google Cloud Platform (GCP).
 * **IaC** : Terraform (Backend distant sur GCS).
 * **CI/CD** : GitHub Actions.
@@ -25,7 +25,7 @@ Le projet adopte une approche modulaire en deux étapes pour garantir la persist
 
 ---
 
-## 🚀 Fonctionnement du Pipeline CI/CD
+##  Fonctionnement du Pipeline CI/CD
 
 Le déploiement suit un cycle de sécurité rigoureux :
 1.  **Phase d'Inspection (Plan)** : À chaque `git push`, Terraform calcule les changements nécessaires et génère un fichier `tfplan`.
@@ -38,7 +38,7 @@ Le pipeline est optimisé pour la sécurité et le coût :
 * **Artefacts** : Le fichier `tfplan` est sauvegardé entre les jobs pour garantir que ce qui est inspecté est exactement ce qui est déployé.
 ---
 
-## 📖 Guide de démarrage
+##  Guide de démarrage
 
 ### 1. Pré-requis
 * Un compte GCP avec un projet actif.
@@ -63,7 +63,7 @@ Une fois le déploiement terminé, l'application est accessible via l'IP publiqu
 
 `http://<IP_PUBLIQUE_VM>`
 
-## 🔐 Sécurité et Maintenance
+##  Sécurité et Maintenance
 
 - Secrets : Aucune clé JSON n'est stockée dans le dépôt grâce au .gitignore et aux GitHub Secrets.
 
