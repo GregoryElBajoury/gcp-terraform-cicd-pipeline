@@ -1,4 +1,4 @@
-# 🛠️ Couche Bootstrap - Backend Terraform
+#  Couche Bootstrap - Backend Terraform
 
 Ce dossier contient la configuration initiale nécessaire pour héberger l'état (state) de l'infrastructure de manière persistante et sécurisée.
 
