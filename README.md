@@ -73,6 +73,6 @@ Une fois le déploiement terminé, l'application est accessible via l'IP publiqu
 
 
 Gregory EL BAJOURY
-DevOps Engineer
+DevOps Engineer 
 
 
